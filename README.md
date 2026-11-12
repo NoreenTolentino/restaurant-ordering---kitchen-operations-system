@@ -2,7 +2,7 @@
 
 A full-featured restaurant ordering and kitchen dispatch system built with HTML, CSS, and JavaScript.
 
-Live Site: 
+Live Site:  https://noreentolentino.github.io/restaurant-ordering---kitchen-operations-system/
 
 ## Features
 - **Storefront & POS Ordering:** Interactive menu categorized by Mains, Sides, and Drinks with live cart calculation, service types (Dine-In, Takeout, Delivery), and custom order notes.

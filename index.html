@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Restaurant Ordering & Kitchen Operations System</title>
+  <link rel="stylesheet" href="./style.css" />
+</head>
+<body>
+  <div class="app-container">
+    <header class="navbar">
+      <div class="nav-brand">
+        <h2>Restaurant Ordering & Kitchen Operations System</h2>
+      </div>
+      <nav class="nav-tabs">
+        <button class="tab-btn active" data-view="storefront">Order Menu</button>
+        <button class="tab-btn" data-view="kitchen">Kitchen Queue (<span id="queueBadge">0</span>)</button>
+        <button class="tab-btn" data-view="admin">Menu Manager</button>
+      </nav>
+      <div class="nav-right-cluster">
+        <div class="nav-clock" id="systemClock">00:00:00</div>
+        <button class="theme-toggle-btn" id="themeToggleBtn" title="Toggle Theme">◐</button>
+      </div>
+    </header>
+
+    <section class="view-section active" id="view-storefront">
+      <div class="storefront-grid">
+        <div class="menu-area">
+          <div class="filter-bar" id="categoryFilter">
+            <button class="filter-pill active" data-cat="ALL">All Items</button>
+            <button class="filter-pill" data-cat="Mains">Mains</button>
+            <button class="filter-pill" data-cat="Sides">Sides</button>
+            <button class="filter-pill" data-cat="Drinks">Drinks</button>
+          </div>
+          <div class="menu-grid" id="menuGrid"></div>
+        </div>
+
+        <aside class="cart-panel">
+          <h3>Current Order</h3>
+          <div class="cart-form">
+            <input type="text" id="customerName" placeholder="Customer Name or Table #" required />
+            <select id="serviceType">
+              <option value="DINE-IN">Dine-In</option>
+              <option value="TAKEOUT">Takeout</option>
+              <option value="DELIVERY">Delivery</option>
+            </select>
+            <input type="text" id="orderNotes" placeholder="Kitchen instructions / allergies" />
+          </div>
+          <div class="cart-items" id="cartItemsList">
+            <p class="empty-cart">Cart is empty.</p>
+          </div>
+          <div class="cart-footer">
+            <div class="cart-total">
+              <span>Total:</span>
+              <strong id="cartTotalPrice">$0.00</strong>
+            </div>
+            <button class="btn-primary" id="submitOrderBtn">Dispatch to Kitchen</button>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="view-section" id="view-kitchen">
+      <div class="kitchen-toolbar">
+        <div class="kpi-metrics">
+          <div class="metric-card">
+            <span>ACTIVE</span>
+            <strong id="kpiActive">0</strong>
+          </div>
+          <div class="metric-card">
+            <span>AVG TIME</span>
+            <strong id="kpiAvgTime">00:00</strong>
+          </div>
+          <div class="metric-card warning">
+            <span>&gt;10 MINS</span>
+            <strong id="kpiDelayed">0</strong>
+          </div>
+        </div>
+      </div>
+      <div class="ticket-grid" id="kitchenTicketGrid"></div>
+      <div class="empty-board hidden" id="kitchenEmpty">
+        <p>All stations clear. No active tickets.</p>
+      </div>
+    </section>
+
+    <section class="view-section" id="view-admin">
+      <div class="admin-grid">
+        <div class="admin-form-box">
+          <h3 id="adminFormTitle">Add Menu Item</h3>
+          <form id="menuForm">
+            <input type="hidden" id="editItemId" />
+            <div class="form-group">
+              <label>Item Name</label>
+              <input type="text" id="itemName" required />
+            </div>
+            <div class="form-group">
+              <label>Category</label>
+              <select id="itemCategory">
+                <option value="Mains">Mains</option>
+                <option value="Sides">Sides</option>
+                <option value="Drinks">Drinks</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Price ($)</label>
+              <input type="number" id="itemPrice" step="0.01" min="0" required />
+            </div>
+            <div class="form-group">
+              <label>Description</label>
+              <input type="text" id="itemDesc" required />
+            </div>
+            <div class="form-group checkbox">
+              <input type="checkbox" id="itemAvailable" checked />
+              <label for="itemAvailable">Available for ordering</label>
+            </div>
+            <div class="form-actions">
+              <button type="submit" class="btn-primary" id="saveItemBtn">Save Item</button>
+              <button type="button" class="btn-secondary hidden" id="cancelEditBtn">Cancel</button>
+            </div>
+          </form>
+        </div>
+
+        <div class="admin-table-box">
+          <h3>Menu Catalog</h3>
+          <table>
+            <thead>
+              <tr>
+                <th>Item</th>
+                <th>Category</th>
+                <th>Price</th>
+                <th>Status</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="adminTableBody"></tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <div class="toast-container" id="toastContainer"></div>
+  <script type="module" src="./app.js"></script>
+</body>
+</html>
